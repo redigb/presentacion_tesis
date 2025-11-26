@@ -1,0 +1,405 @@
+---
+import Layout from '../layouts/Slide.astro';
+
+// OBJETIVO GENERAL (El Núcleo)
+const generalObj = {
+  title: "OBJETIVO GENERAL",
+  text: "Diseñar un sistema inteligente con IA, analítica predictiva e IoT-GPS para reducir la morosidad y optimizar la seguridad crediticia.",
+  // Icono de "Mundo/Red"
+  icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"
+};
+
+// OBJETIVOS ESPECÍFICOS (Los Módulos)
+const specificObjs = [
+  {
+    id: "01",
+    title: "Automatización IA",
+    desc: "Procesamiento predictivo para eliminar subjetividad.",
+    icon: "M9.6 3H11v10H9.6zM13 3h1.4v10H13z M21 16l-4.3-4.3c-1-1-2.6-1-3.5 0L11 13.9V6c0-1.7-1.3-3-3-3S5 4.3 5 6v13c0 1.2.6 2.3 1.6 3l3.6 2.7c1.5 1.1 3.5 1 4.8-.3l6-7.3c.5-.6.5-1.5 0-2.1z"
+  },
+  {
+    id: "02",
+    title: "Clasificación Riesgo",
+    desc: "Modelos ML para categorizar niveles (Alto, Medio, Bajo).",
+    icon: "M3.5 18.49l6-6.01 4 4L22 6.92l-1.41-1.41-7.09 7.97-4-4L2 16.99z"
+  },
+  {
+    id: "03",
+    title: "Asistente LLM",
+    desc: "Soporte inteligente al asesor durante la entrevista.",
+    icon: "M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"
+  },
+  {
+    id: "04",
+    title: "Agilidad Respuesta",
+    desc: "Optimización de tiempos para mejorar la experiencia.",
+    icon: "M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"
+  },
+  {
+    id: "05",
+    title: "Rastreo IoT-GPS",
+    desc: "Monitoreo en tiempo real de activos financiados.",
+    icon: "M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+  },
+  {
+    id: "06",
+    title: "Dashboards KPIs",
+    desc: "Gestión visual de indicadores clave del portafolio.",
+    icon: "M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"
+  }
+];
+---
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700;800&display=swap');
+
+  .slide-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-color: #ffffff;
+    /* Fondo vivo animado */
+    background-image: radial-gradient(#d1d5db 1.5px, transparent 1.5px);
+    background-size: 30px 30px;
+    animation: bgMove 60s linear infinite;
+    display: flex;
+    font-family: 'Manrope', system-ui, sans-serif;
+    overflow: hidden;
+  }
+
+  /* FONDO AMBIENTAL (Glow) */
+  .bg-glow {
+    position: absolute;
+    top: -20%;
+    left: 20%;
+    width: 900px;
+    height: 900px;
+    background: radial-gradient(circle, rgba(29, 78, 137, 0.04) 0%, rgba(255,255,255,0) 70%);
+    border-radius: 50%;
+    z-index: 0;
+    animation: pulseAmbient 10s infinite;
+  }
+
+  .left-bar {
+    width: 80px;
+    height: 100%;
+    background: #1D4E89;
+    flex-shrink: 0;
+    z-index: 10;
+    box-shadow: 4px 0 20px rgba(0,0,0,0.15);
+  }
+
+  .main-content {
+    flex-grow: 1;
+    padding: 2rem 5rem; /* Espaciado generoso */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 5;
+    position: relative;
+  }
+
+  /* --- CABECERA --- */
+  .header-area {
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding-left: 1rem;
+  }
+
+  .subtitle {
+    display: block;
+    font-size: 7rem; /* GIGANTE, detrás */
+    color: transparent;
+    -webkit-text-stroke: 2px rgba(29, 78, 137, 0.05);
+    font-weight: 800;
+    line-height: 0.8;
+    position: absolute;
+    top: -45px;
+    left: -15px;
+    z-index: -1;
+  }
+
+  h1 {
+    font-size: 4rem; /* Título más grande e impactante */
+    font-weight: 800;
+    color: #111827;
+    margin: 0;
+    opacity: 0;
+    animation: slideInLeft 0.8s ease-out 0.2s forwards;
+  }
+
+  /* --- OBJETIVO GENERAL (NÚCLEO) --- */
+  .general-card {
+    background: linear-gradient(135deg, #1D4E89 0%, #0f3057 100%);
+    border-radius: 20px; /* Más redondeado */
+    padding: 2rem 3rem; /* Más relleno */
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    color: white;
+    box-shadow: 0 20px 50px -10px rgba(29, 78, 137, 0.4);
+    margin-bottom: 0;
+    position: relative;
+    z-index: 2;
+    opacity: 0;
+    animation: fadeInDown 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.4s forwards;
+    overflow: hidden;
+  }
+
+  /* Luz de Escáner */
+  .general-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 50%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+    transform: skewX(-25deg);
+    animation: scanShine 5s infinite 2s;
+  }
+
+  /* Radar Container */
+  .radar-container {
+    position: relative;
+    width: 90px; height: 90px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* Anillo Giratorio */
+  .radar-ring {
+    position: absolute;
+    width: 100%; height: 100%;
+    border: 2px dashed rgba(255,255,255,0.3);
+    border-radius: 50%;
+    animation: rotateRadar 10s linear infinite;
+  }
+  
+  .gen-icon {
+    width: 64px; height: 64px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 2;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 0 20px rgba(255,255,255,0.1);
+  }
+  .gen-icon svg { width: 36px; height: 36px; fill: white; }
+
+  .gen-content h2 {
+    font-size: 1.1rem; /* Subtítulo más grande */
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: #93c5fd; /* Azul claro neón */
+    margin: 0 0 0.8rem 0;
+    font-weight: 800;
+  }
+  .gen-content p {
+    font-size: 1.6rem; /* Texto principal MUY GRANDE y legible */
+    line-height: 1.4;
+    margin: 0;
+    font-weight: 600; /* Letra con peso */
+  }
+
+  /* --- CONEXIÓN --- */
+  .connection-system {
+    height: 50px;
+    width: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    opacity: 0;
+    animation: fadeIn 0.5s ease 1s forwards;
+  }
+
+  .main-cable {
+    width: 3px; /* Cable más grueso */
+    height: 100%;
+    background: #e5e7eb;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .energy-flow {
+    position: absolute;
+    top: -100%; left: 0;
+    width: 100%; height: 50%;
+    background: linear-gradient(to bottom, transparent, #2E63E5, transparent);
+    animation: flowDown 2s infinite;
+  }
+
+  .hub-dot {
+    position: absolute;
+    bottom: -6px; left: 50%;
+    transform: translateX(-50%);
+    width: 14px; height: 14px;
+    background: #1D4E89;
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px #e5e7eb;
+    z-index: 3;
+  }
+
+  /* --- GRID ESPECÍFICOS --- */
+  .specific-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem; /* Más separación */
+    padding-top: 10px;
+  }
+
+  .spec-card {
+    background: white;
+    border: 1px solid rgba(0,0,0,0.05);
+    border-radius: 16px; /* Bordes más suaves */
+    padding: 1.8rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1.2rem;
+    position: relative;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.03);
+    opacity: 0;
+    /* La animación de flotación se define individualmente abajo */
+  }
+
+  /* Staggering y Flotación */
+  .spec-card:nth-child(1) { animation: cardUp 0.6s ease-out 1.0s forwards, floatCard 6s ease-in-out infinite 1.6s; }
+  .spec-card:nth-child(2) { animation: cardUp 0.6s ease-out 1.1s forwards, floatCard 7s ease-in-out infinite 1.7s; }
+  .spec-card:nth-child(3) { animation: cardUp 0.6s ease-out 1.2s forwards, floatCard 5s ease-in-out infinite 1.8s; }
+  .spec-card:nth-child(4) { animation: cardUp 0.6s ease-out 1.3s forwards, floatCard 8s ease-in-out infinite 1.9s; }
+  .spec-card:nth-child(5) { animation: cardUp 0.6s ease-out 1.4s forwards, floatCard 6s ease-in-out infinite 2.0s; }
+  .spec-card:nth-child(6) { animation: cardUp 0.6s ease-out 1.5s forwards, floatCard 7s ease-in-out infinite 2.1s; }
+
+  /* Esquina Tech */
+  .spec-card::before {
+    content: ''; position: absolute; top: 0; right: 0;
+    width: 15px; height: 15px;
+    border-top: 3px solid #1D4E89; border-right: 3px solid #1D4E89;
+    opacity: 0.6;
+    border-top-right-radius: 8px; /* Ajuste fino */
+  }
+
+  /* Barra de Estado */
+  .status-bar {
+    position: absolute; bottom: 0; left: 2rem; right: 2rem;
+    height: 4px; background: #f3f4f6;
+    border-radius: 4px 4px 0 0;
+    overflow: hidden;
+  }
+  .status-fill {
+    height: 100%; width: 30%;
+    background: #2E63E5;
+    animation: loadBar 3s infinite alternate;
+  }
+
+  .spec-icon {
+    width: 56px; height: 56px; /* Icono más grande */
+    background: #eff6ff;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    color: #1D4E89;
+    flex-shrink: 0;
+    position: relative;
+  }
+  
+  /* Pulso */
+  .spec-icon::after {
+    content: ''; position: absolute; width: 100%; height: 100%;
+    border-radius: 12px; border: 1px solid #2E63E5;
+    opacity: 0; animation: ripple 2.5s infinite;
+  }
+
+  .spec-icon svg { width: 30px; height: 30px; fill: currentColor; }
+
+  .spec-content { flex-grow: 1; }
+  
+  .spec-title { 
+    font-size: 1.2rem; /* Título específico más grande */
+    font-weight: 800; 
+    color: #111827; 
+    margin-bottom: 6px; 
+  }
+  
+  .spec-desc { 
+    font-size: 0.95rem; /* Descripción legible */
+    color: #4b5563; 
+    line-height: 1.5; 
+    font-weight: 500;
+  }
+
+  /* --- ANIMACIONES --- */
+  @keyframes bgMove { 0% { background-position: 0 0; } 100% { background-position: 100px 100px; } }
+  @keyframes pulseAmbient { 0%, 100% { opacity: 0.5; transform: scale(1); } 50% { opacity: 0.8; transform: scale(1.05); } }
+  
+  @keyframes slideInLeft { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
+  @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes cardUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+  
+  @keyframes floatCard { 
+    0%, 100% { transform: translateY(0); } 
+    50% { transform: translateY(-6px); } 
+  }
+
+  @keyframes rotateRadar { to { transform: rotate(360deg); } }
+  @keyframes scanShine { 0% { left: -100%; } 20%, 100% { left: 200%; } }
+  @keyframes flowDown { 0% { top: -100%; } 100% { top: 100%; } }
+  @keyframes ripple { 0% { transform: scale(0.9); opacity: 1; } 100% { transform: scale(1.4); opacity: 0; } }
+  @keyframes loadBar { 0% { width: 10%; } 100% { width: 60%; } }
+  @keyframes fadeIn { to { opacity: 1; } }
+
+</style>
+
+<Layout title="Objetivos">
+  <div class="slide-container">
+    <div class="bg-glow"></div>
+    <div class="left-bar"></div>
+
+    <div class="main-content">
+      
+      <div class="header-area">
+        <span class="subtitle">02</span>
+        <h1>Objetivos</h1>
+      </div>
+
+      <!-- 1. OBJETIVO GENERAL (NÚCLEO) -->
+      <div class="general-card">
+        <div class="radar-container">
+          <div class="radar-ring"></div>
+          <div class="gen-icon">
+            <svg viewBox="0 0 24 24"><path d={generalObj.icon}/></svg>
+          </div>
+        </div>
+        <div class="gen-content">
+          <h2>{generalObj.title}</h2>
+          <p>{generalObj.text}</p>
+        </div>
+      </div>
+
+      <!-- 2. SISTEMA DE CONEXIÓN (CABLE DE ENERGÍA) -->
+      <div class="connection-system">
+        <div class="main-cable">
+          <div class="energy-flow"></div>
+        </div>
+        <div class="hub-dot"></div>
+      </div>
+
+      <!-- 3. GRID DE ESPECÍFICOS (MÓDULOS) -->
+      <div class="specific-grid">
+        {specificObjs.map((item) => (
+          <div class="spec-card">
+            <div class="spec-icon">
+              <svg viewBox="0 0 24 24"><path d={item.icon}/></svg>
+            </div>
+            <div class="spec-content">
+              <div class="spec-title">{item.title}</div>
+              <div class="spec-desc">{item.desc}</div>
+            </div>
+            <!-- Barra de progreso decorativa -->
+            <div class="status-bar">
+              <div class="status-fill" style={`animation-duration: ${Math.random() * 2 + 2}s`}></div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+    </div>
+  </div>
+</Layout>

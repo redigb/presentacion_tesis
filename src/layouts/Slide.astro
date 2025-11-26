@@ -1,0 +1,90 @@
+---
+import Controls from '../components/Controls.astro';
+import '../styles/index.css';
+
+export interface Props {
+  title: string;
+  animation?: 'page' | 'element' | string;
+}
+
+const { title, animation = 'element' } = Astro.props;
+
+// 1. Obtenemos todas las páginas
+let slides = await Astro.glob('../pages/*.astro');
+
+// 2. ORDENAMIENTO ROBUSTO:
+// Forzamos a que 'index.astro' sea SIEMPRE el primero
+slides = slides.sort((a, b) => {
+  if (a.file.includes('index.astro')) return -1;
+  if (b.file.includes('index.astro')) return 1;
+  return a.url.localeCompare(b.url);
+});
+
+// 3. NORMALIZAR URL ACTUAL
+const normalize = (path: string) => path?.replace(/\/$/, '').replace(/\.html$/, '') || '/';
+const currentPath = normalize(Astro.url.pathname);
+
+const currentIndex = slides.findIndex(slide => {
+  // Truco: Si la url del slide es "" (vacía), la tratamos como "/"
+  const slideUrl = slide.url || '/';
+  return normalize(slideUrl) === currentPath;
+});
+
+// 4. CALCULAR SIGUIENTE Y ANTERIOR (CORREGIDO)
+
+// Siguiente
+const nextSlideObj = slides[currentIndex + 1];
+const nextUrl = nextSlideObj ? (nextSlideObj.url || '/') : undefined;
+
+// Anterior
+// Si index > 0, buscamos el anterior. 
+const prevSlideObj = currentIndex > 0 ? slides[currentIndex - 1] : null;
+
+// ¡AQUÍ ESTABA EL ERROR! 
+// Si la url es "" (vacía), forzamos que sea '/' para que el if(prev) funcione.
+const prevUrl = prevSlideObj ? (prevSlideObj.url || '/') : undefined;
+
+---
+
+<!DOCTYPE html>
+<html lang="es" data-view-transition={animation}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+
+    <Controls 
+      next={nextUrl} 
+      prev={prevUrl} 
+    />
+  </body>
+</html>
+
+<script is:inline>
+  const type = performance.getEntriesByType('navigation')[0]?.type;
+  if (type === 'reload') {
+    document.documentElement.dataset.viewTransitionDirection = 'reload';
+  } else if (type === 'back_forward') {
+    const prev = sessionStorage.getItem('prev-url');
+    document.documentElement.dataset.viewTransitionDirection =
+      document.referrer === prev ? 'forward' : 'back';
+  } else {
+    document.documentElement.dataset.viewTransitionDirection = 'forward';
+  }
+  sessionStorage.setItem('prev-url', location.href);
+</script>
+
+<style is:global>
+  body {
+    display: grid;
+    margin: 0;
+    overflow: hidden;
+  }
+  body > * {
+    grid-area: 1 / 1;
+  }
+</style>

@@ -1,0 +1,109 @@
+---
+export interface Props {
+  next?: string;
+  prev?: string;
+}
+
+const { next, prev } = Astro.props;
+
+// Importamos el icono (asegúrate de que la ruta sea correcta)
+import arrow_right from '../assets/icons/arrow-right-bold.svg?raw';
+---
+
+{next && (
+  <nav class="controls">
+    <a href={next} class="nav-btn" aria-label="Siguiente diapositiva">
+      <div class="icon">
+        <Fragment set:html={arrow_right} />
+      </div>
+    </a>
+  </nav>
+)}
+
+<script is:inline define:vars={{ next, prev }}>
+  // Precarga para velocidad máxima
+  if (next) {
+    const link = document.createElement('link');
+    link.rel = 'prefetch';
+    link.href = next;
+    document.head.appendChild(link);
+  }
+
+  window.addEventListener('keydown', e => {
+    // FLECHA DERECHA -> Avanza (Si hay next)
+    if ((e.key === 'ArrowRight' || e.key === 'PageDown') && next) {
+      window.location.href = next;
+    }
+
+    // FLECHA IZQUIERDA -> Retrocede (SOLO si hay prev)
+    // Si 'prev' es undefined (estás en el inicio), esto no hace NADA.
+    if ((e.key === 'ArrowLeft' || e.key === 'PageUp') && prev) {
+      window.location.href = prev;
+    }
+  });
+</script>
+
+<style>
+  /* --- ESTILOS IGUALES AL ANTERIOR --- */
+  .controls {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 150px;
+    height: 100vh;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 3rem;
+  }
+
+  .nav-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    text-decoration: none;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), inset 0 0 20px rgba(255,255,255,0.2);
+    
+    opacity: 0; /* Oculto por defecto */
+    transform: translateX(20px);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+
+  .controls:hover .nav-btn {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .nav-btn:hover {
+    transform: scale(1.1) !important;
+    background: rgba(255, 255, 255, 0.4);
+  }
+  
+  .nav-btn:active {
+    transform: scale(0.95) !important;
+  }
+
+  .icon {
+    width: 36px; 
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000000;
+  }
+
+  .icon :global(svg) {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+    filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+  }
+</style>

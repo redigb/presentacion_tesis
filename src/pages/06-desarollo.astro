@@ -1,0 +1,331 @@
+---
+import Layout from '../layouts/Slide.astro';
+
+const timelineItems = [
+  {
+    month: "AGOSTO",
+    number: "01",
+    title: "Inicio & Diseño",
+    tasks: [
+      "Diseño y arquitectura del módulo IoT-GPS.",
+      "Construcción inicial de la UI de monitoreo."
+    ],
+    // Icono Lápiz
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><path d="M2 2l7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle></svg>`
+  },
+  {
+    month: "SEPTIEMBRE",
+    number: "02",
+    title: "Inteligencia Artificial",
+    tasks: [
+      "Entrenamiento e integración del modelo ML.",
+      "Conexión del Orquestador N8N con el modelo."
+    ],
+    // Icono Cerebro
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"></path><path d="M12 8v-2"></path><path d="M12 16v2"></path><path d="M16 12h2"></path><path d="M8 12H6"></path><path d="M15 9l1.5-1.5"></path><path d="M9 9l-1.5-1.5"></path><path d="M15 15l1.5 1.5"></path><path d="M9 15l-1.5 1.5"></path></svg>`
+  },
+  {
+    month: "OCTUBRE",
+    number: "03",
+    title: "Integración Total",
+    tasks: [
+      "Ajuste del Dashboard en Next.js.",
+      "Implementación de Ollama (LLM) para reportes."
+    ],
+    // Icono Puzzle
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>`
+  },
+  {
+    month: "NOVIEMBRE",
+    number: "04",
+    title: "Despliegue Final",
+    tasks: [
+      "Conexión total: Spring Boot ↔ N8N ↔ LLM.",
+      "Validación final y Dashboard Gerencial."
+    ],
+    // Icono Cohete
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.94 5.25-2.81 7.11a22.85 22.85 0 0 1-4.19 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path></svg>`
+  }
+];
+---
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap');
+
+  /* --- LAYOUT --- */
+  .slide-container {
+    width: 100%;
+    height: 100vh;
+    background-color: #ffffff;
+    background-image: 
+      linear-gradient(rgba(29, 78, 137, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(29, 78, 137, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    display: flex;
+    font-family: 'Manrope', sans-serif;
+    overflow: hidden;
+  }
+
+  .left-bar {
+    width: 80px;
+    height: 100%;
+    background: #1D4E89;
+    flex-shrink: 0;
+    z-index: 10;
+    box-shadow: 4px 0 20px rgba(29, 78, 137, 0.2);
+  }
+
+  .main-content {
+    flex-grow: 1;
+    padding: 3rem 6rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    z-index: 5;
+  }
+
+  /* --- HEADER --- */
+  .header-area {
+    margin-bottom: 3rem;
+    position: relative;
+  }
+
+  .subtitle-watermark {
+    display: block;
+    font-size: 14rem; 
+    color: transparent;
+    -webkit-text-stroke: 2px rgba(29, 78, 137, 0.06);
+    font-weight: 800;
+    line-height: 0.7;
+    position: absolute;
+    top: -85px;
+    left: -20px;
+    z-index: -1;
+    opacity: 0;
+    animation: fadeIn 1.5s ease-out forwards;
+  }
+
+  h1 {
+    font-size: 4rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0;
+    letter-spacing: -1px;
+    opacity: 0;
+    animation: slideInLeft 0.8s ease-out 0.2s forwards;
+  }
+
+  /* --- GRID --- */
+  .timeline-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    width: 100%;
+  }
+
+  /* --- CARD "AUTO-PLAY" --- */
+  .card {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    
+    /* Estado inicial oculto */
+    opacity: 0;
+    transform: translateY(30px);
+    
+    /* ANIMACIÓN DOBLE: 
+       1. cardEnter: Entra en escena (una sola vez)
+       2. floating: Se mueve suavemente (infinito) 
+    */
+    animation: 
+      cardEnter 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards,
+      floating 6s ease-in-out infinite;
+  }
+
+  /* Borde izquierdo azul sólido (Identidad) */
+  .card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 6px;
+    background: linear-gradient(180deg, #1D4E89 0%, #3b82f6 100%);
+  }
+
+  /* RETRASOS DE ENTRADA (CASCADA) */
+  /* Esto hace que aparezcan una a una */
+  .card:nth-child(1) { animation-delay: 0.3s, 1s; } /* Entra a los 0.3s, flota desde el 1s */
+  .card:nth-child(2) { animation-delay: 0.5s, 1.5s; }
+  .card:nth-child(3) { animation-delay: 0.7s, 2s; }
+  .card:nth-child(4) { animation-delay: 0.9s, 2.5s; }
+
+  /* --- EFECTO DE BRILLO AUTOMÁTICO --- */
+  .card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -150%;
+    width: 50%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+    transform: skewX(-25deg);
+    z-index: 10;
+    /* Pasa un brillo cada 8 segundos automáticamente */
+    animation: shineAuto 8s infinite ease-in-out;
+  }
+
+  /* Desincronizar los brillos para que se vea orgánico */
+  .card:nth-child(1)::after { animation-delay: 2s; }
+  .card:nth-child(2)::after { animation-delay: 4s; }
+  .card:nth-child(3)::after { animation-delay: 6s; }
+  .card:nth-child(4)::after { animation-delay: 8s; }
+
+  /* --- CONTENIDO CARD --- */
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .month-tag {
+    background: #f1f5f9;
+    color: #1D4E89;
+    font-size: 0.7rem;
+    font-weight: 800;
+    padding: 6px 14px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* Icono (Activado por defecto, no requiere hover) */
+  .icon-circle {
+    width: 42px; height: 42px;
+    background: #1D4E89; /* Fondo Azul Activo */
+    color: white;        /* Icono Blanco */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(29, 78, 137, 0.3); /* Sombra azulada */
+    transform: rotate(0deg);
+    animation: iconPulse 4s infinite ease-in-out;
+  }
+
+  .card-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  /* Número de fondo (Estilo Outline) */
+  .bg-number {
+    position: absolute;
+    right: 1rem;
+    bottom: -1rem;
+    font-size: 6rem;
+    font-weight: 800;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(29, 78, 137, 0.08);
+    z-index: 0;
+    pointer-events: none;
+    font-family: 'Manrope', sans-serif;
+  }
+
+  ul {
+    margin: 0; padding: 0; list-style: none; position: relative; z-index: 1;
+  }
+
+  li {
+    font-size: 0.95rem;
+    color: #475569;
+    margin-bottom: 0.6rem;
+    padding-left: 1.2rem;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 8px;
+    width: 6px; height: 6px;
+    background: #1D4E89;
+    border-radius: 50%;
+  }
+
+  /* --- KEYFRAMES (La magia automática) --- */
+  
+  @keyframes slideInLeft { from { opacity: 0; transform: translateX(-40px); } to { opacity: 1; transform: translateX(0); } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  
+  /* Entrada inicial de la tarjeta */
+  @keyframes cardEnter { 
+    from { opacity: 0; transform: translateY(40px); } 
+    to { opacity: 1; transform: translateY(0); } 
+  }
+
+  /* Movimiento suave constante (Respiración) */
+  @keyframes floating {
+    0% { transform: translateY(0px); box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+    50% { transform: translateY(-6px); box-shadow: 0 15px 25px rgba(29, 78, 137, 0.1); } /* Se eleva y da sombra */
+    100% { transform: translateY(0px); box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+  }
+
+  /* Brillo pasante */
+  @keyframes shineAuto {
+    0% { left: -150%; opacity: 0; }
+    10% { opacity: 1; }
+    40% { left: 150%; opacity: 0; }
+    100% { left: 150%; opacity: 0; }
+  }
+
+  /* Pulso del icono */
+  @keyframes iconPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
+
+</style>
+
+<Layout title="Proceso de Desarrollo">
+  <div class="slide-container">
+    
+    <div class="left-bar"></div>
+
+    <div class="main-content">
+      
+      <div class="header-area">
+        <span class="subtitle-watermark">04</span>
+        <h1>Proceso de Desarrollo</h1>
+      </div>
+
+      <div class="timeline-grid">
+        {timelineItems.map((item) => (
+          <div class="card">
+            <div class="bg-number">{item.number}</div>
+            
+            <div class="card-top">
+              <span class="month-tag">{item.month}</span>
+              <div class="icon-circle" set:html={item.icon}></div>
+            </div>
+            
+            <span class="card-title">{item.title}</span>
+            
+            <ul>
+              {item.tasks.map((task) => (
+                <li>{task}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+
+    </div>
+  </div>
+</Layout>

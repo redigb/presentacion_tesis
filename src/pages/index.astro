@@ -1,0 +1,198 @@
+---
+import Layout from '../layouts/Slide.astro';
+// Asegúrate de que la ruta sea correcta según tu carpeta
+import logo_senati from '../assets/senati_logo.png';
+---
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;700;800&display=swap');
+
+  /* --- CONFIGURACIÓN BASE --- */
+  .slide-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-color: #ffffff;
+    overflow: hidden;
+    font-family: 'Manrope', system-ui, sans-serif;
+    display: flex;
+    align-items: center;
+  }
+
+  /* --- BARRA LATERAL (ANIMADA) --- */
+  .left-bar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 140px;
+    height: 100%;
+    background: #1D4E89; /* Azul SENATI Profundo */
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding-bottom: 50px;
+    /* Animación de entrada */
+    animation: slideInLeft 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+  }
+
+  .accent-line {
+    width: 6px;
+    height: 120px;
+    background-color: #ffffff;
+    border-radius: 4px;
+  }
+
+  /* --- CONTENIDO PRINCIPAL --- */
+  .content-wrapper {
+    margin-left: 220px; /* Espacio para no chocar con la barra */
+    max-width: 900px;
+    z-index: 2;
+  }
+
+  /* Etiqueta superior */
+  .eyebrow {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #2E63E5; /* Azul claro */
+    margin-bottom: 1rem;
+    
+    opacity: 0; /* Empieza invisible */
+    animation: fadeInUp 0.8s ease-out 0.5s forwards;
+  }
+
+  h1 {
+    font-size: 3.5rem; /* Tamaño equilibrado */
+    line-height: 1.15;
+    margin: 0;
+    color: #111827; /* Negro/Gris oscuro */
+  }
+
+  /* Animación línea por línea */
+  .line-1 {
+    display: block;
+    font-weight: 300; /* Letra delgada */
+    color: #4b5563;
+    font-size: 2.8rem;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease-out 0.7s forwards;
+  }
+
+  .line-2 {
+    display: block;
+    font-weight: 800; /* Letra muy gruesa */
+    color: #000000;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease-out 0.9s forwards;
+  }
+
+  .line-3 {
+    display: block;
+    font-weight: 800;
+    color: #1D4E89; /* AZUL SENATI */
+    opacity: 0;
+    animation: fadeInUp 0.8s ease-out 1.1s forwards;
+  }
+
+  /* --- FOOTER (AUTOR Y LOGO) --- */
+  .footer {
+    position: absolute;
+    bottom: 40px;
+    right: 60px;
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    
+    opacity: 0;
+    animation: fadeIn 1s ease-out 1.5s forwards;
+  }
+
+  .author-block {
+    text-align: right;
+    border-right: 2px solid #e5e7eb;
+    padding-right: 20px;
+  }
+
+  .author-label {
+    display: block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: #6b7280;
+    letter-spacing: 1px;
+    margin-bottom: 2px;
+  }
+
+  .author-name {
+    display: block;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #111827; /* Negro */
+  }
+
+  .logo {
+    height: 65px;
+    width: auto;
+    object-fit: contain;
+    /* Efecto suave al pasar el mouse */
+    transition: transform 0.3s ease;
+  }
+
+  .logo:hover {
+    transform: scale(1.05);
+  }
+
+  /* --- DEFINICIÓN DE ANIMACIONES --- */
+  @keyframes slideInLeft {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0); }
+  }
+
+  @keyframes fadeInUp {
+    from { 
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to { 
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+</style>
+
+<Layout title="Presentación — SENATI">
+  <div class="slide-container">
+    
+    <div class="left-bar">
+      <div class="accent-line"></div>
+    </div>
+
+    <div class="content-wrapper">
+      <span class="eyebrow">Proyecto De Tesis</span>
+      
+      <h1>
+        <span class="line-1">Sistema de Evaluación</span>
+        <span class="line-2">Automatizada del Riesgo</span>
+        <span class="line-3">Crediticio con IA y Datos Historicos</span>
+      </h1>
+    </div>
+
+    <div class="footer">
+      <div class="author-block">
+        <span class="author-label">Autor</span>
+        <span class="author-name">RENZO RAUL CONDEZO RIVERA</span>
+      </div>
+      
+      <img class="logo" src={logo_senati} alt="Logo SENATI">
+    </div>
+
+  </div>
+</Layout>

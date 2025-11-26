@@ -1,0 +1,265 @@
+---
+import Layout from '../layouts/Slide.astro';
+
+const specificConclusions = [
+  {
+    title: "Automatización IA",
+    desc: "Procesamiento predictivo eliminando la subjetividad manual.",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>`
+  },
+  {
+    title: "Clasificación de Riesgo",
+    desc: "Modelos ML que categorizan niveles (Alto, Medio, Bajo).",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>`
+  },
+  {
+    title: "Asistente LLM",
+    desc: "Soporte inteligente al asesor para interpretar resultados.",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>`
+  },
+  {
+    title: "Agilidad de Respuesta",
+    desc: "Optimización de tiempos para mejorar la experiencia.",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>`
+  },
+  {
+    title: "Rastreo IoT-GPS",
+    desc: "Monitoreo en tiempo real de activos financiados.",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>`
+  },
+  {
+    title: "Dashboards KPIs",
+    desc: "Gestión visual de indicadores clave del portafolio.",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><rect x="7" y="7" width="3" height="9"></rect><rect x="14" y="7" width="3" height="5"></rect></svg>`
+  }
+];
+---
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700;800&display=swap');
+
+  /* --- LAYOUT --- */
+  .slide-container {
+    width: 100%;
+    height: 100vh;
+    background-color: #ffffff;
+    background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+    background-size: 40px 40px;
+    display: flex;
+    font-family: 'Manrope', system-ui, sans-serif;
+    overflow: hidden;
+  }
+
+  .left-bar {
+    width: 80px;
+    height: 100%;
+    background: #1D4E89;
+    flex-shrink: 0;
+    z-index: 20; /* Barra encima de todo */
+    box-shadow: 4px 0 20px rgba(0,0,0,0.15);
+  }
+
+  .main-content {
+    flex-grow: 1;
+    padding: 2rem 6rem;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 5;
+    justify-content: center;
+  }
+
+  /* --- HEADER --- */
+  .header-area {
+    margin-bottom: 2rem;
+    position: relative;
+    /* Esto asegura que el contenido del header esté sobre el número */
+    z-index: 5; 
+  }
+
+  /* NÚMERO DE FONDO (WATERMARK) */
+  .watermark {
+    position: absolute;
+    /* Lo subimos y movemos a la izquierda para que no choque con el texto */
+    top: -90px; 
+    left: -20px;
+    
+    font-size: 14rem;
+    font-weight: 900;
+    
+    /* Color sólido pero muy claro (Gris Hielo) para que no moleste */
+    color: #f1f5f9; 
+    
+    z-index: -1; /* Detrás de todo */
+    line-height: 1;
+    pointer-events: none;
+    opacity: 0;
+    animation: fadeIn 1s ease-out forwards;
+  }
+
+  h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0;
+    position: relative;
+    z-index: 10; /* Texto explícitamente encima */
+    opacity: 0;
+    animation: slideInLeft 0.8s ease-out 0.2s forwards;
+  }
+
+  /* --- HERO BANNER --- */
+  .general-objective {
+    background: linear-gradient(135deg, #1D4E89 0%, #0f172a 100%);
+    padding: 1.8rem 2.5rem;
+    border-radius: 16px;
+    color: white;
+    margin-bottom: 3rem;
+    box-shadow: 0 15px 30px -5px rgba(29, 78, 137, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    position: relative;
+    overflow: hidden;
+    z-index: 5; /* Encima del fondo */
+    
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.4s forwards;
+  }
+
+  .general-objective::after {
+    content: '';
+    position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    transform: skewX(-25deg);
+    animation: shine 5s infinite ease-in-out;
+  }
+
+  .check-circle {
+    width: 50px; height: 50px;
+    background: #10b981;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 0 0 5px rgba(16, 185, 129, 0.2);
+  }
+
+  .obj-text strong { display: block; font-size: 1.2rem; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
+  .obj-text span { font-size: 1rem; opacity: 0.95; line-height: 1.5; display: block; }
+
+  /* CONECTOR VISUAL */
+  .connector-container {
+    display: flex;
+    justify-content: center;
+    margin-top: -3rem;
+    margin-bottom: 1rem;
+    opacity: 0;
+    animation: fadeIn 0.5s ease 0.8s forwards;
+  }
+  .line-vertical { width: 2px; height: 30px; background: #cbd5e1; }
+  .dot-connector { width: 8px; height: 8px; background: #1D4E89; border-radius: 50%; margin-top: -4px; margin-left: -3px; }
+
+  /* --- GRID --- */
+  .grid-conclusions {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    z-index: 5;
+  }
+
+  .card-item {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-bottom: 4px solid #1D4E89;
+    border-radius: 10px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    box-shadow: 0 4px 15px -3px rgba(0,0,0,0.05);
+    
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  .card-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px -5px rgba(29, 78, 137, 0.1);
+  }
+
+  /* Animación Cascada */
+  .card-item:nth-child(1) { animation: cardPopUp 0.6s ease-out 0.6s forwards; }
+  .card-item:nth-child(2) { animation: cardPopUp 0.6s ease-out 0.7s forwards; }
+  .card-item:nth-child(3) { animation: cardPopUp 0.6s ease-out 0.8s forwards; }
+  .card-item:nth-child(4) { animation: cardPopUp 0.6s ease-out 0.9s forwards; }
+  .card-item:nth-child(5) { animation: cardPopUp 0.6s ease-out 1.0s forwards; }
+  .card-item:nth-child(6) { animation: cardPopUp 0.6s ease-out 1.1s forwards; }
+
+  .item-header { display: flex; align-items: center; gap: 12px; }
+  
+  .icon-wrap {
+    width: 36px; height: 36px;
+    background: #f1f5f9; color: #1D4E89;
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
+  }
+
+  .item-title { font-size: 1rem; font-weight: 800; color: #0f172a; line-height: 1.2; }
+  .item-desc { font-size: 0.85rem; color: #64748b; line-height: 1.4; }
+
+  /* --- ANIMACIONES --- */
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes slideInLeft { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
+  @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes shine { 0% { left: -100%; } 20% { left: 200%; } 100% { left: 200%; } }
+  
+  @keyframes cardPopUp {
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+</style>
+
+<Layout title="Conclusiones">
+  <div class="slide-container">
+    
+    <div class="left-bar"></div>
+
+    <div class="main-content">
+      
+      <div class="header-area">
+        <span class="watermark">05</span>
+        <h1>Conclusiones</h1>
+      </div>
+
+      <div class="general-objective">
+        <div class="check-circle">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </div>
+        <div class="obj-text">
+          <strong>Objetivo General Cumplido</strong>
+          <span>Se diseñó e implementó exitosamente un sistema inteligente con IA, analítica predictiva e IoT-GPS, logrando una herramienta integral para la reducción de morosidad.</span>
+        </div>
+      </div>
+
+      <div class="connector-container">
+        <div class="line-vertical">
+            <div class="dot-connector"></div>
+        </div>
+      </div>
+
+      <div class="grid-conclusions">
+        {specificConclusions.map((item) => (
+          <div class="card-item">
+            <div class="item-header">
+              <div class="icon-wrap" set:html={item.icon}></div>
+              <span class="item-title">{item.title}</span>
+            </div>
+            <p class="item-desc">{item.desc}</p>
+          </div>
+        ))}
+      </div>
+
+    </div>
+  </div>
+</Layout>
