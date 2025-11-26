@@ -119,13 +119,14 @@ const specificObjs = [
     z-index: -1;
   }
 
-  h1 {
-    font-size: 4rem; /* Título más grande e impactante */
+h1 {
+    font-size: 3.5rem;
     font-weight: 800;
     color: #111827;
-    margin: 0;
+    margin: 0 0 3.5rem 0;
+    letter-spacing: -2px;
     opacity: 0;
-    animation: slideInLeft 0.8s ease-out 0.2s forwards;
+    animation: titleReveal 0.8s cubic-bezier(0.2, 1, 0.3, 1) forwards;
   }
 
   /* --- OBJETIVO GENERAL (NÚCLEO) --- */

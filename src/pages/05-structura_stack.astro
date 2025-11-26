@@ -21,15 +21,14 @@ import img_placa from '../assets/img/yligo_780_g.jpg';
     position: relative;
   }
 
-  h1 {
+ h1 {
     font-size: 3.5rem;
     font-weight: 800;
-    color: #0f172a;
-    margin: 0 0 1.5rem 0;
-    letter-spacing: -1.5px;
-    z-index: 10;
+    color: #111827;
+    margin: 0 0 3.5rem 0;
+    letter-spacing: -2px;
     opacity: 0;
-    animation: fadeInDown 0.8s ease-out forwards; /* Título entra solo */
+    animation: titleReveal 0.8s cubic-bezier(0.2, 1, 0.3, 1) forwards;
   }
   
   h1 span { color: #1D4E89; }
